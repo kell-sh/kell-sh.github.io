@@ -32,16 +32,14 @@ const crosswordData = {
     },
     
     clues: {
-        across: [
-            { number: 1, clue: 'Placeholder clue for CEYLON (6 letters)' }
-        ],
+        across: [],
         down: [
-            { number: 1, clue: 'Placeholder clue for CHAI (4 letters)' },
-            { number: 2, clue: 'Placeholder clue for INGVER (6 letters)' },
-            { number: 3, clue: 'Placeholder clue for EARLGREY (8 letters)' },
-            { number: 4, clue: 'Placeholder clue for KUMMEL (6 letters)' },
-            { number: 5, clue: 'Placeholder clue for OOLONG (6 letters)' },
-            { number: 6, clue: 'Placeholder clue for SIDRUN (6 letters)' }
+            { number: 1, clue: 'Vürtsine piimatee' },
+            { number: 2, clue: 'Tee, mis toetab immuunsüsteemi' },
+            { number: 3, clue: 'Must tee bergamoti aroomiga' },
+            { number: 4, clue: 'Tee, mis ravib kurku' },
+            { number: 5, clue: 'Jake Peralta: Okay, slayer. Prepare to go to jail for ... time.' },
+            { number: 6, clue: 'Tsitruseline tee' }
         ]
     },
     
@@ -76,6 +74,11 @@ function generateGrid() {
                 input.dataset.row = row;
                 input.dataset.col = col;
                 
+                // Highlight Ceylon row (row 7)
+                if (row === 7) {
+                    cell.classList.add('ceylon-cell');
+                }
+                
                 // Add event listeners
                 input.addEventListener('input', handleInput);
                 input.addEventListener('keydown', handleKeydown);
@@ -101,11 +104,16 @@ function generateClues() {
     const acrossClues = document.getElementById('across-clues');
     const downClues = document.getElementById('down-clues');
     
-    crosswordData.clues.across.forEach(clue => {
-        const li = document.createElement('li');
-        li.innerHTML = `<span class="clue-number">${clue.number}.</span>${clue.clue}`;
-        acrossClues.appendChild(li);
-    });
+    // Hide across section if no across clues
+    if (crosswordData.clues.across.length === 0) {
+        acrossClues.parentElement.style.display = 'none';
+    } else {
+        crosswordData.clues.across.forEach(clue => {
+            const li = document.createElement('li');
+            li.innerHTML = `<span class="clue-number">${clue.number}.</span>${clue.clue}`;
+            acrossClues.appendChild(li);
+        });
+    }
     
     crosswordData.clues.down.forEach(clue => {
         const li = document.createElement('li');

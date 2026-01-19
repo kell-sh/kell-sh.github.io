@@ -61,6 +61,18 @@ h1 {
     pointer-events: none;
 }
 
+.cell.ceylon-cell {
+    background: #fffacd;
+}
+
+.cell.ceylon-cell input {
+    background: #fffacd;
+}
+
+.cell.ceylon-cell input:focus {
+    background: #fff5b3;
+}
+
 .cell input {
     width: 100%;
     height: 100%;
