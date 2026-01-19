@@ -165,8 +165,8 @@ function handleKeydown(e) {
                 checkCompletion();
                 shouldMove = false;
             } else {
-                // Move to previous cell if current is empty
-                nextCol--;
+                // Move to previous cell (up) if current is empty
+                nextRow--;
             }
             e.preventDefault();
             break;
@@ -178,11 +178,11 @@ function handleKeydown(e) {
             e.preventDefault();
             break;
         default:
-            // After typing a letter, move to next cell
+            // After typing a letter, move to next cell (down)
             if (e.key.length === 1 && e.key.match(/[a-z]/i)) {
-                // Let the input event handle the value, then move
+                // Let the input event handle the value, then move down
                 setTimeout(() => {
-                    focusCell(row, col + 1);
+                    focusCell(row + 1, col);
                 }, 0);
             }
             return;
