@@ -139,36 +139,58 @@ function handleKeydown(e) {
     
     let nextRow = row;
     let nextCol = col;
+    let shouldMove = true;
     
     switch(e.key) {
         case 'ArrowRight':
+            e.preventDefault();
             nextCol++;
             break;
         case 'ArrowLeft':
+            e.preventDefault();
             nextCol--;
             break;
         case 'ArrowDown':
+            e.preventDefault();
             nextRow++;
             break;
         case 'ArrowUp':
+            e.preventDefault();
             nextRow--;
             break;
         case 'Backspace':
-            if (!input.value) {
+            if (input.value) {
+                // Clear current cell content
+                input.value = '';
+                checkCompletion();
+                shouldMove = false;
+            } else {
                 // Move to previous cell if current is empty
                 nextCol--;
             }
+            e.preventDefault();
+            break;
+        case 'Delete':
+            // Clear current cell without moving
+            input.value = '';
+            checkCompletion();
+            shouldMove = false;
+            e.preventDefault();
             break;
         default:
             // After typing a letter, move to next cell
             if (e.key.length === 1 && e.key.match(/[a-z]/i)) {
-                nextCol++;
+                // Let the input event handle the value, then move
+                setTimeout(() => {
+                    focusCell(row, col + 1);
+                }, 0);
             }
             return;
     }
     
-    e.preventDefault();
-    focusCell(nextRow, nextCol);
+    if (shouldMove) {
+        focusCell(nextRow, nextCol);
+    }
 }
 
 // Focus on a specific cell
