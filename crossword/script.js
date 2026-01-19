@@ -43,8 +43,8 @@ const crosswordData = {
         ]
     },
     
-    // Replace with your actual YouTube video link
-    rewardLink: 'https://www.youtube.com/watch?v=PLACEHOLDER_VIDEO_ID'
+    // YouTube reward video
+    rewardLink: 'https://youtu.be/-mJiZqE0UE8'
 };
 
 // Generate the crossword grid
