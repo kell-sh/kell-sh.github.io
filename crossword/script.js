@@ -197,8 +197,30 @@ function handleKeydown(e) {
 function focusCell(row, col) {
     const { rows, cols } = crosswordData.gridSize;
     
-    // Wrap around or stay in bounds
-    if (row < 0 || row >= rows || col < 0 || col >= cols) {
+    // If we're going past the bottom, move to top of next column
+    if (row >= rows) {
+        if (col + 1 < cols) {
+            focusCell(0, col + 1);
+            return;
+        } else {
+            // At bottom of last column, stay at last valid cell
+            return;
+        }
+    }
+    
+    // If we're going past the top, move to bottom of previous column
+    if (row < 0) {
+        if (col - 1 >= 0) {
+            focusCell(rows - 1, col - 1);
+            return;
+        } else {
+            // At top of first column, stay at first valid cell
+            return;
+        }
+    }
+    
+    // Stay in bounds for columns
+    if (col < 0 || col >= cols) {
         return;
     }
     
@@ -206,11 +228,12 @@ function focusCell(row, col) {
     if (targetInput) {
         targetInput.focus();
     } else {
-        // If it's a black cell, try to skip to the next one
-        if (col < cols - 1) {
-            focusCell(row, col + 1);
-        } else if (row < rows - 1) {
-            focusCell(row + 1, 0);
+        // If it's a black cell, try to skip to the next one going down
+        if (row + 1 < rows) {
+            focusCell(row + 1, col);
+        } else if (col + 1 < cols) {
+            // End of column, move to top of next column
+            focusCell(0, col + 1);
         }
     }
 }
