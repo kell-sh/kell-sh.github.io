@@ -1,51 +1,47 @@
 // Crossword puzzle data structure
-// Replace this with your actual crossword data
 const crosswordData = {
-    gridSize: { rows: 10, cols: 10 },
+    gridSize: { rows: 13, cols: 6 },
     
     // Black cells are represented as null
     // Numbers indicate the starting position of a word
     layout: [
-        [1, 'W', 'W', 'W', null, 2, 'W', 'W', 'W', 'W'],
-        ['W', null, 'W', null, null, 'W', null, 'W', null, null],
-        [3, 'W', 'W', 'W', 'W', 'W', null, 'W', null, null],
-        ['W', null, 'W', null, null, 'W', null, 'W', null, null],
-        [4, 'W', 'W', 'W', 'W', null, 5, 'W', 'W', 'W'],
-        ['W', null, 'W', null, null, null, 'W', null, 'W', null],
-        [6, 'W', 'W', 'W', null, 7, 'W', 'W', 'W', 'W'],
-        ['W', null, null, null, null, 'W', null, 'W', null, null],
-        [8, 'W', 'W', 'W', 'W', 'W', null, 'W', null, null],
-        ['W', null, null, null, null, 'W', null, 'W', null, null]
+        [null, null, 3, null, null, null],
+        [null, null, 'L', null, null, null],
+        [null, null, 'L', 4, null, 6],
+        [null, 2, 'L', 'L', null, 'L'],
+        [null, 'L', 'L', 'L', null, 'L'],
+        [null, 'L', 'L', 'L', null, 'L'],
+        [null, 'L', 'L', 'L', null, 'L'],
+        [1, 'L', 'L', 'L', 5, 'L'],
+        ['L', 'L', null, null, 'L', null],
+        ['L', null, null, null, 'L', null],
+        ['L', null, null, null, 'L', null],
+        [null, null, null, null, 'L', null],
+        [null, null, null, null, 'L', null]
     ],
     
     // Define the correct answers for each word
     answers: {
-        '1-across': 'WORD',
-        '2-across': 'EXAMPLE',
-        '3-across': 'PUZZLE',
-        '4-across': 'ANSWER',
-        '5-across': 'CLUE',
-        '6-across': 'GRID',
-        '7-across': 'SOLVE',
-        '8-across': 'LETTER',
-        '1-down': 'VERTICAL',
-        '2-down': 'CROSSWORD'
+        '1-across': 'CEYLON',
+        '1-down': 'CHAI',
+        '2-down': 'INGVER',
+        '3-down': 'EARLGREY',
+        '4-down': 'KUMMEL',
+        '5-down': 'OOLONG',
+        '6-down': 'SIDRUN'
     },
     
     clues: {
         across: [
-            { number: 1, clue: 'Placeholder clue for 1 across (4 letters)' },
-            { number: 2, clue: 'Placeholder clue for 2 across (7 letters)' },
-            { number: 3, clue: 'Placeholder clue for 3 across (6 letters)' },
-            { number: 4, clue: 'Placeholder clue for 4 across (6 letters)' },
-            { number: 5, clue: 'Placeholder clue for 5 across (4 letters)' },
-            { number: 6, clue: 'Placeholder clue for 6 across (4 letters)' },
-            { number: 7, clue: 'Placeholder clue for 7 across (5 letters)' },
-            { number: 8, clue: 'Placeholder clue for 8 across (6 letters)' }
+            { number: 1, clue: 'Placeholder clue for CEYLON (6 letters)' }
         ],
         down: [
-            { number: 1, clue: 'Placeholder clue for 1 down (8 letters)' },
-            { number: 2, clue: 'Placeholder clue for 2 down (9 letters)' }
+            { number: 1, clue: 'Placeholder clue for CHAI (4 letters)' },
+            { number: 2, clue: 'Placeholder clue for INGVER (6 letters)' },
+            { number: 3, clue: 'Placeholder clue for EARLGREY (8 letters)' },
+            { number: 4, clue: 'Placeholder clue for KUMMEL (6 letters)' },
+            { number: 5, clue: 'Placeholder clue for OOLONG (6 letters)' },
+            { number: 6, clue: 'Placeholder clue for SIDRUN (6 letters)' }
         ]
     },
     
@@ -191,10 +187,10 @@ function focusCell(row, col) {
 
 // Check if puzzle is completed correctly
 function checkCompletion() {
-    // For this placeholder implementation, just check if all cells are filled
     const inputs = document.querySelectorAll('.cell input');
     let allFilled = true;
     
+    // First check if all cells are filled
     for (let input of inputs) {
         if (!input.value) {
             allFilled = false;
@@ -202,9 +198,72 @@ function checkCompletion() {
         }
     }
     
-    if (allFilled) {
-        // In a real implementation, you would check against the correct answers
-        // For now, show completion when all cells are filled
+    if (!allFilled) {
+        return;
+    }
+    
+    // Now validate the answers
+    const userAnswers = {};
+    
+    // Get 1-across (CEYLON) - row 7, cols 0-5
+    userAnswers['1-across'] = '';
+    for (let col = 0; col < 6; col++) {
+        const input = document.querySelector(`input[data-row="7"][data-col="${col}"]`);
+        userAnswers['1-across'] += input.value;
+    }
+    
+    // Get 1-down (CHAI) - col 0, rows 7-10
+    userAnswers['1-down'] = '';
+    for (let row = 7; row <= 10; row++) {
+        const input = document.querySelector(`input[data-row="${row}"][data-col="0"]`);
+        userAnswers['1-down'] += input.value;
+    }
+    
+    // Get 2-down (INGVER) - col 1, rows 3-8
+    userAnswers['2-down'] = '';
+    for (let row = 3; row <= 8; row++) {
+        const input = document.querySelector(`input[data-row="${row}"][data-col="1"]`);
+        userAnswers['2-down'] += input.value;
+    }
+    
+    // Get 3-down (EARLGREY) - col 2, rows 0-7
+    userAnswers['3-down'] = '';
+    for (let row = 0; row <= 7; row++) {
+        const input = document.querySelector(`input[data-row="${row}"][data-col="2"]`);
+        userAnswers['3-down'] += input.value;
+    }
+    
+    // Get 4-down (KUMMEL) - col 3, rows 2-7
+    userAnswers['4-down'] = '';
+    for (let row = 2; row <= 7; row++) {
+        const input = document.querySelector(`input[data-row="${row}"][data-col="3"]`);
+        userAnswers['4-down'] += input.value;
+    }
+    
+    // Get 5-down (OOLONG) - col 4, rows 7-12
+    userAnswers['5-down'] = '';
+    for (let row = 7; row <= 12; row++) {
+        const input = document.querySelector(`input[data-row="${row}"][data-col="4"]`);
+        userAnswers['5-down'] += input.value;
+    }
+    
+    // Get 6-down (SIDRUN) - col 5, rows 2-7
+    userAnswers['6-down'] = '';
+    for (let row = 2; row <= 7; row++) {
+        const input = document.querySelector(`input[data-row="${row}"][data-col="5"]`);
+        userAnswers['6-down'] += input.value;
+    }
+    
+    // Check if all answers are correct
+    let allCorrect = true;
+    for (let key in crosswordData.answers) {
+        if (userAnswers[key] !== crosswordData.answers[key]) {
+            allCorrect = false;
+            break;
+        }
+    }
+    
+    if (allCorrect) {
         showCompletionMessage();
     }
 }
